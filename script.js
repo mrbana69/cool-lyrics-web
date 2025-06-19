@@ -1,3 +1,4 @@
+console.log("musicMetadata:", typeof musicMetadata);
 let tracks = []; // { audioFile, lrcFile, name }
 let currentTrack = 0;
 
