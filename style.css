@@ -1,92 +1,228 @@
-#controls, #controls * {
-  font-family: 'Montserrat', Arial, sans-serif;
-}
-
-#lyrics-screen #current-line {
-  font-family: 'SF Pro Display Variable', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif;
-  font-size: 3vw;
-  font-weight: 700;
+/* Font di base */
+body {
+  margin: 0;
+  padding: 0;
+  font-family: 'Montserrat', 'SF Pro Display', Arial, sans-serif;
+  background: linear-gradient(135deg, #1db954 0%, #191414 100%);
+  min-height: 100vh;
   color: #fff;
-  text-shadow: 0 2px 16px rgba(0,0,0,0.7);
-  z-index: 2;
-  position: relative;
-  text-align: center;
-  padding: 2vw;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
 }
 
+/* Contenitore principale */
+#controls {
+  background: rgba(25, 20, 20, 0.85);
+  border-radius: 32px;
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.25);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  border: 1.5px solid rgba(255,255,255,0.10);
+  padding: 40px 32px 32px 32px;
+  margin-top: 48px;
+  max-width: 420px;
+  width: 95vw;
+  text-align: center;
+  animation: fadeIn 1.2s cubic-bezier(.39,.575,.565,1) both;
+}
+
+@keyframes fadeIn {
+  0% { opacity: 0; transform: translateY(40px);}
+  100% { opacity: 1; transform: translateY(0);}
+}
+
+#controls h1 {
+  font-size: 2.1rem;
+  font-weight: 700;
+  color: #1db954;
+  margin-bottom: 24px;
+  letter-spacing: 1px;
+  text-shadow: 0 2px 16px rgba(30,185,84,0.15);
+  user-select: none;
+}
+
+#controls label {
+  display: block;
+  margin: 18px 0 10px 0;
+  font-size: 1.1rem;
+  color: #fff;
+  font-weight: 500;
+  letter-spacing: 0.5px;
+}
+
+#controls input[type="file"] {
+  margin-left: 8px;
+  font-size: 1rem;
+  color: #1db954;
+  background: transparent;
+  border: none;
+  outline: none;
+}
+
+#controls audio {
+  width: 100%;
+  margin: 18px 0 10px 0;
+  border-radius: 12px;
+  background: #222;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.15);
+}
+
+#controls p {
+  color: #b3b3b3;
+  font-size: 1rem;
+  margin-top: 18px;
+  margin-bottom: 0;
+  letter-spacing: 0.5px;
+}
+
+/* Track selector */
+#trackSelectorContainer label {
+  color: #1db954;
+  font-weight: 600;
+}
+
+#trackSelector, #trackSelectorFullscreen {
+  background: rgba(25, 20, 20, 0.85);
+  color: #fff;
+  border: 1px solid #1db954;
+  border-radius: 16px;
+  padding: 6px 16px;
+  font-size: 1rem;
+  margin-left: 8px;
+  outline: none;
+  transition: border 0.2s;
+}
+
+#trackSelector:focus, #trackSelectorFullscreen:focus {
+  border: 1.5px solid #1ed760;
+}
+
+/* Lyrics screen fullscreen */
 #lyrics-screen {
   position: fixed;
   inset: 0;
+  z-index: 100;
   display: flex;
+  flex-direction: column;
   align-items: center;
   justify-content: center;
-  overflow: hidden;
-  z-index: 100;
-  background: #111;
 }
 
 #bg-blur {
   position: absolute;
   inset: 0;
-  background: #111;
-  background-size: cover;
-  background-position: center;
-  filter: blur(32px) brightness(0.7);
+  background: linear-gradient(120deg, #1db954 0%, #191414 100%);
+  filter: blur(40px) brightness(0.7);
   z-index: 1;
-  transition: background-image 0.5s;
+  pointer-events: none;
 }
 
-#lyrics-screen::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.45);
+/* Glassmorphism per il contenuto fullscreen */
+#lyrics-screen > #current-line,
+#lyrics-screen > #fullscreen-controls,
+#lyrics-screen > #waveform {
+  background: rgba(255,255,255,0.10);
+  border-radius: 28px;
+  box-shadow: 0 8px 32px 0 rgba(31,38,135,0.18);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1.5px solid rgba(255,255,255,0.22);
+  margin-bottom: 18px;
+  padding: 24px 18px;
+  width: 90vw;
+  max-width: 700px;
+  position: relative;
   z-index: 2;
-  pointer-events: none;
+}
+
+#current-line {
+  font-size: 2.2rem;
+  font-weight: 700;
+  color: #fff;
+  text-shadow: 0 4px 32px #1db95499, 0 2px 8px #000a;
+  margin-bottom: 0;
+  margin-top: 40px;
+  text-align: center;
+  letter-spacing: 1px;
+  transition: color 0.2s;
+  line-height: 1.3;
+  background: rgba(255,255,255,0.13);
 }
 
 #fullscreen-controls {
-  position: absolute;
-  top: 2vw;
-  right: 2vw;
-  z-index: 10;
   display: flex;
-  gap: 1vw;
   align-items: center;
+  gap: 18px;
+  justify-content: center;
+  flex-wrap: wrap;
+  background: rgba(255,255,255,0.10);
+  margin-top: 18px;
+  margin-bottom: 0;
+  box-shadow: 0 4px 24px rgba(30,185,84,0.10);
 }
 
 #fullscreen-controls button {
-  background: rgba(0,0,0,0.5);
-  border: none;
-  border-radius: 0.5vw;
+  background: linear-gradient(90deg, #1db954 60%, #1ed760 100%);
   color: #fff;
+  border: none;
+  padding: 12px 22px;
+  font-size: 1.3rem;
+  border-radius: 50px;
   cursor: pointer;
-  padding: 0.3vw 0.7vw;
-  font-size: 1.5vw;
-  transition: background 0.2s;
-}
-#fullscreen-controls button:hover {
-  background: rgba(0,0,0,0.8);
+  font-weight: bold;
+  box-shadow: 0 4px 16px rgba(30,185,84,0.18);
+  transition: background 0.2s, color 0.2s, transform 0.15s;
+  outline: none;
 }
 
-#fullscreen-controls select {
-  font-size: 1.1vw;
-  padding: 0.3vw 0.7vw;
-  border-radius: 0.5vw;
-  border: none;
-  background: rgba(0,0,0,0.5);
+#fullscreen-controls button:hover {
+  background: #fff;
+  color: #1db954;
+  transform: scale(1.08);
+}
+
+#fullscreen-controls label {
   color: #fff;
+  font-size: 1rem;
+  font-weight: 500;
+  margin-left: 12px;
 }
 
 #waveform {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 2vw;
-  height: 60px;
-  z-index: 5;
   width: 90vw;
-  margin: 0 auto;
-  background: transparent;
-  pointer-events: none;
+  max-width: 700px;
+  min-height: 64px;
+  background: rgba(255,255,255,0.10);
+  border-radius: 18px;
+  box-shadow: 0 2px 12px rgba(0,0,0,0.10);
+  margin: 0 auto 32px auto;
+  z-index: 2;
+  position: relative;
+  padding: 12px 0;
+}
+
+/* Responsive */
+@media (max-width: 700px) {
+  #controls {
+    padding: 24px 6vw 18px 6vw;
+    margin-top: 18px;
+  }
+  #current-line,
+  #fullscreen-controls,
+  #waveform {
+    padding: 12px 6vw;
+    max-width: 98vw;
+  }
+  #current-line {
+    font-size: 1.3rem;
+    margin-top: 20px;
+  }
+  #fullscreen-controls {
+    gap: 8px;
+  }
+  #waveform {
+    min-height: 40px;
+  }
 }
