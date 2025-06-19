@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Beautiful Lyrics Fullscreen</title>
+  <link rel="stylesheet" href="style.css">
+  <!-- Google Fonts per la home -->
+  <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@500;700&display=swap" rel="stylesheet">
+  <!-- SF Pro Display (Apple Music) da CDN non ufficiale -->
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fontsource-variable/sf-pro-display@5.0.12/index.min.css">
+  <script src="https://unpkg.com/wavesurfer.js"></script>
+</head>
+<body>
+  <div id="controls">
+    <h1>🎵 Beautiful Lyrics Web</h1>
+    <label>🎶 Audio:
+      <input type="file" id="audioInput" accept="audio/*" multiple>
+    </label>
+    <label>📝 LRC:
+      <input type="file" id="lrcInput" accept=".lrc" multiple>
+    </label>
+    <div id="trackSelectorContainer" style="margin: 1em 0; display:none;">
+      <label>Seleziona traccia:
+        <select id="trackSelector"></select>
+      </label>
+    </div>
+    <audio id="audio" controls></audio>
+    <p>▶️ Premi play per entrare in fullscreen</p>
+  </div>
+
+  <div id="lyrics-screen" style="display:none;">
+    <div id="bg-blur"></div>
+    <div id="current-line"></div>
+    <div id="fullscreen-controls">
+      <button id="prevTrackBtn" title="Precedente">⏮️</button>
+      <button id="playPauseBtn" title="Pausa/Riprendi">⏸️</button>
+      <button id="nextTrackBtn" title="Successiva">⏭️</button>
+      <label style="color: #fff;">
+        Cambia traccia:
+        <select id="trackSelectorFullscreen"></select>
+      </label>
+    </div>
+    <div id="waveform"></div>
+  </div>
+<script type="module" src="script.js"></script>
+<script src="script.js"></script>s
+</body>
+</html>
