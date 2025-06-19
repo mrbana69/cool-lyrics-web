@@ -1,6 +1,3 @@
-import { parseBlob } from 'music-metadata-browser';
-import WaveSurfer from 'wavesurfer.js';
-
 let tracks = []; // { audioFile, lrcFile, name }
 let currentTrack = 0;
 
@@ -183,7 +180,7 @@ function parseLRC(text) {
 
 async function setCoverFromAudio(file) {
   try {
-    const metadata = await parseBlob(file);
+    const metadata = await musicMetadata.parseBlob(file);
     if (
       metadata.common.picture &&
       metadata.common.picture.length > 0 &&
