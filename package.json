@@ -1,5 +1,10 @@
 {
+  "name": "spotify-desktop-companion",
+  "version": "1.0.0",
+  "description": "Lyrics fullscreen companion",
+  "type": "module",
   "dependencies": {
-    "music-metadata-browser": "^2.5.11"
+    "music-metadata-browser": "^2.7.10",
+    "wavesurfer.js": "^7.11.0"
   }
 }

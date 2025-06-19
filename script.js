@@ -1,7 +1,7 @@
 import { parseBlob } from 'music-metadata-browser';
-console.log("musicMetadata:", typeof musicMetadata);
-let lrcDataList = [];
-let audioList = [];
+import WaveSurfer from 'wavesurfer.js';
+
+let tracks = []; // { audioFile, lrcFile, name }
 let currentTrack = 0;
 
 const audio = document.getElementById('audio');
@@ -21,13 +21,12 @@ const playPauseBtn = document.getElementById('playPauseBtn');
 const waveformDiv = document.getElementById('waveform');
 
 let wavesurfer = null;
-let tracks = []; // Ogni elemento: { audioFile, lrcFile, name }
 
+// Associa audio e LRC per nome base
 audioInput.addEventListener('change', handleFiles);
 lrcInput.addEventListener('change', handleFiles);
 
 function handleFiles() {
-  // Mappa nome base → file
   const audioMap = {};
   const lrcMap = {};
 
@@ -40,7 +39,6 @@ function handleFiles() {
     lrcMap[name] = file;
   });
 
-  // Crea lista tracce abbinate solo se esistono entrambi
   tracks = [];
   Object.keys(audioMap).forEach(name => {
     if (lrcMap[name]) {
@@ -88,7 +86,7 @@ prevTrackBtn.addEventListener('click', () => {
   }
 });
 nextTrackBtn.addEventListener('click', () => {
-  if (currentTrack < Math.min(audioList.length, lrcDataList.length) - 1) {
+  if (currentTrack < tracks.length - 1) {
     selectTrack(currentTrack + 1);
     audio.play();
   }
@@ -185,8 +183,7 @@ function parseLRC(text) {
 
 async function setCoverFromAudio(file) {
   try {
-    const metadata = await musicMetadata.parseBlob(file);
-    console.log("Metadata:", metadata);
+    const metadata = await parseBlob(file);
     if (
       metadata.common.picture &&
       metadata.common.picture.length > 0 &&
@@ -198,21 +195,21 @@ async function setCoverFromAudio(file) {
       bgBlur.style.backgroundImage = `url('${url}')`;
       bgBlur.style.backgroundSize = "cover";
       bgBlur.style.backgroundPosition = "center";
-      console.log("Copertina FLAC trovata e impostata!");
       return;
-    } else {
-      console.log("Nessuna copertina trovata nei metadata FLAC.");
     }
   } catch (e) {
-    console.error("Errore lettura metadata FLAC:", e);
+    // Ignora errori
   }
-  // Fallback
+  // Fallback: immagine di default
   bgBlur.style.backgroundImage = "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80')";
   bgBlur.style.backgroundSize = "cover";
   bgBlur.style.backgroundPosition = "center";
 }
 
-bgBlur.style.backgroundImage = "linear-gradient(135deg, #222 0%, #444 100%)";
+// Fallback iniziale
+bgBlur.style.backgroundImage = "url('https://images.unsplash.com/photo-1465101046530-73398c7f28ca?auto=format&fit=crop&w=800&q=80')";
+bgBlur.style.backgroundSize = "cover";
+bgBlur.style.backgroundPosition = "center";
 
 // --- Waveform ---
 function loadWaveform(file) {
